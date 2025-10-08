@@ -1,22 +1,42 @@
-import { AppStorage as BaseAppStorage, WebExtensionStorageBackend, SessionIndexedDBBackend, getAppStorage } from "@mariozechner/pi-web-ui";
+import { AppStorage as BaseAppStorage, getAppStorage, IndexedDBStorageBackend } from "@mariozechner/pi-web-ui";
+import { MemoriesRepository } from "./memories-repository.js";
 import { SkillsRepository } from "./skills-repository.js";
 
 /**
- * Extended AppStorage for Sitegeist with skills repository.
+ * Extended AppStorage for Sitegeist with skills and memories repositories.
  */
 export class SitegeistAppStorage extends BaseAppStorage {
 	readonly skills: SkillsRepository;
+	readonly memories: MemoriesRepository;
 
 	constructor() {
-		// Initialize base AppStorage with web-ui repositories
-		super({
-			settings: new WebExtensionStorageBackend("settings"),
-			providerKeys: new WebExtensionStorageBackend("providerKeys"),
-			sessions: new SessionIndexedDBBackend("pi-extension-sessions"),
+		// Create unified IndexedDB backend with all stores
+		const backend = new IndexedDBStorageBackend({
+			dbName: "sitegeist-storage",
+			version: 1,
+			stores: [
+				// Core stores (web-ui)
+				{
+					name: "sessions-metadata",
+					keyPath: "id",
+					indices: [{ name: "lastModified", keyPath: "lastModified" }],
+				},
+				{ name: "sessions-data", keyPath: "id" },
+				{ name: "settings" },
+				{ name: "provider-keys" },
+
+				// Sitegeist stores
+				{ name: "memories" },
+				{ name: "skills" },
+				{ name: "user-prompts" }, // Future use
+			],
 		});
 
-		// Add Sitegeist-specific repository
-		this.skills = new SkillsRepository(new WebExtensionStorageBackend("skills"));
+		super(backend);
+
+		// Add Sitegeist-specific repositories
+		this.skills = new SkillsRepository(backend);
+		this.memories = new MemoriesRepository(backend);
 	}
 }
 

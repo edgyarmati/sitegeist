@@ -18,7 +18,6 @@ export interface Skill {
  */
 export class SkillsRepository {
 	private backend: StorageBackend;
-	private readonly prefix = "skills:";
 
 	constructor(backend: StorageBackend) {
 		this.backend = backend;
@@ -28,28 +27,25 @@ export class SkillsRepository {
 	 * Get skill by name.
 	 */
 	async getSkill(name: string): Promise<Skill | null> {
-		const key = `${this.prefix}${name}`;
-		return await this.backend.get<Skill>(key);
+		return await this.backend.get<Skill>("skills", name);
 	}
 
 	/**
 	 * Save or update a skill.
 	 */
 	async saveSkill(skill: Skill): Promise<void> {
-		const key = `${this.prefix}${skill.name}`;
-		await this.backend.set(key, skill);
+		await this.backend.set("skills", skill.name, skill);
 	}
 
 	/**
 	 * List all skills matching current URL (or all if no URL provided).
 	 */
 	async listSkills(currentUrl?: string): Promise<Array<{ name: string; domainPatterns: string[]; shortDescription: string }>> {
-		const keys = await this.backend.keys();
-		const skillKeys = keys.filter((k) => k.startsWith(this.prefix));
+		const keys = await this.backend.keys("skills");
 
 		const skills = [];
-		for (const key of skillKeys) {
-			const skill = await this.backend.get<Skill>(key);
+		for (const key of keys) {
+			const skill = await this.backend.get<Skill>("skills", key);
 			if (skill) {
 				// Filter by domain if URL provided
 				if (currentUrl && !this.matchesAnyPattern(currentUrl, skill.domainPatterns)) {
@@ -69,12 +65,11 @@ export class SkillsRepository {
 	 * Get all skills matching a URL.
 	 */
 	async getSkillsForUrl(url: string): Promise<Skill[]> {
-		const keys = await this.backend.keys();
-		const skillKeys = keys.filter((k) => k.startsWith(this.prefix));
+		const keys = await this.backend.keys("skills");
 
 		const matchingSkills = [];
-		for (const key of skillKeys) {
-			const skill = await this.backend.get<Skill>(key);
+		for (const key of keys) {
+			const skill = await this.backend.get<Skill>("skills", key);
 			if (skill && this.matchesAnyPattern(url, skill.domainPatterns)) {
 				matchingSkills.push(skill);
 			}
@@ -86,8 +81,7 @@ export class SkillsRepository {
 	 * Delete skill by name.
 	 */
 	async deleteSkill(name: string): Promise<void> {
-		const key = `${this.prefix}${name}`;
-		await this.backend.delete(key);
+		await this.backend.delete("skills", name);
 	}
 
 	/**
