@@ -50,6 +50,27 @@ export class SkillsStore extends Store {
 		return this.list(url);
 	}
 
+	// Alias methods for backward compatibility
+	async getSkillsForUrl(url: string): Promise<Skill[]> {
+		return this.getForUrl(url);
+	}
+
+	async getSkill(name: string): Promise<Skill | null> {
+		return this.get(name);
+	}
+
+	async saveSkill(skill: Skill): Promise<void> {
+		return this.save(skill);
+	}
+
+	async deleteSkill(name: string): Promise<void> {
+		return this.delete(name);
+	}
+
+	async listSkills(currentUrl?: string): Promise<Skill[]> {
+		return this.list(currentUrl);
+	}
+
 	/**
 	 * Check if URL matches any of the domain patterns using glob matching.
 	 */

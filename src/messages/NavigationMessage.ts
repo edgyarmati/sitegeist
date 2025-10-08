@@ -4,7 +4,7 @@ import { html, LitElement, type TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { SkillPill } from "../components/SkillPill.js";
 import { getSitegeistStorage } from "../storage/app-storage.js";
-import type { Skill } from "../storage/skills-repository.js";
+import type { Skill } from "../storage/stores/skills-store.js";
 
 // ============================================================================
 // NAVIGATION MESSAGE TYPE

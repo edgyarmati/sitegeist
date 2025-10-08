@@ -1,7 +1,7 @@
 import { html, Input, Button } from "@mariozechner/mini-lit";
 import { SettingsTab } from "@mariozechner/pi-web-ui";
 import { getSitegeistStorage } from "../storage/app-storage.js";
-import type { Skill } from "../storage/skills-repository.js";
+import type { Skill } from "../storage/stores/skills-store.js";
 import { getFaviconUrl } from "../utils/favicon.js";
 import { Toast } from "../components/Toast.js";
 
@@ -36,7 +36,7 @@ export class SkillsTab extends SettingsTab {
 		this.filteredSkills = this.skills.filter(
 			s =>
 				s.name.toLowerCase().includes(query) ||
-				s.domainPatterns.some(p => p.toLowerCase().includes(query)) ||
+				s.domainPatterns.some((p: string) => p.toLowerCase().includes(query)) ||
 				s.shortDescription.toLowerCase().includes(query)
 		);
 		this.requestUpdate();

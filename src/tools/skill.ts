@@ -6,7 +6,7 @@ import { Type, type Static } from "@sinclair/typebox";
 import { Sparkles } from "lucide";
 import { DomainPill } from "../components/DomainPill.js";
 import { SkillPill } from "../components/SkillPill.js";
-import type { Skill } from "../storage/skills-repository.js";
+import type { Skill } from "../storage/stores/skills-store.js";
 import { getSitegeistStorage } from "../storage/app-storage.js";
 
 // Cross-browser API
@@ -52,6 +52,9 @@ const skillParamsSchema = Type.Object({
 	}),
 	name: Type.Optional(Type.String({ description: "Skill name (required for get/update/delete)" })),
 	url: Type.Optional(Type.String({ description: "URL to filter skills by domain (optional for list action, defaults to current tab URL)" })),
+	includeLibraryCode: Type.Optional(Type.Boolean({
+		description: "Use with 'get' action to include full library code in output (only necessary if you want to make changes to the library code of a skill)"
+	})),
 	data: Type.Optional(
 		Type.Object({
 			name: Type.String({ description: "Unique skill name" }),
@@ -170,9 +173,14 @@ If invalid skill name provided, returns list of available skills for domain.`,
 						};
 					}
 
-					// Include full skill info for LLM: name, domains, description, examples, and library code
+					// Build output based on includeLibraryCode flag
 					const domainsStr = skill.domainPatterns.join(", ");
-					const llmOutput = `${skill.name} (${domainsStr})\n${skill.description}\n\nExamples:\n${skill.examples}\n\nLibrary:\n${skill.library}`;
+					let llmOutput = `${skill.name} (${domainsStr})\n${skill.description}\n\nExamples:\n${skill.examples}`;
+
+					// Only include library code if explicitly requested
+					if (args.includeLibraryCode) {
+						llmOutput += `\n\nLibrary:\n${skill.library}`;
+					}
 
 					return {
 						output: llmOutput,

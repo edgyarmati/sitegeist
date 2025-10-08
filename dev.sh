@@ -8,9 +8,14 @@ set -e
 echo "🚀 Starting development servers..."
 echo ""
 
-# Check if required directory exists
+# Check if required directories exist
 if [ ! -d "../pi-mono" ]; then
     echo "❌ Error: pi-mono not found at ../pi-mono"
+    exit 1
+fi
+
+if [ ! -d "../mini-lit" ]; then
+    echo "❌ Error: mini-lit not found at ../mini-lit"
     exit 1
 fi
 
@@ -18,6 +23,10 @@ fi
 trap 'echo ""; echo "🛑 Stopping all dev servers..."; kill 0' EXIT INT TERM
 
 # Start dev servers
+echo "📦 Starting mini-lit dev server..."
+(cd ../mini-lit && npm run dev) &
+MINI_LIT_PID=$!
+
 echo "🤖 Starting pi-mono dev server..."
 (cd ../pi-mono && npm run dev) &
 PI_MONO_PID=$!
@@ -31,6 +40,7 @@ SITEGEIST_PID=$!
 
 echo ""
 echo "✅ All dev servers started!"
+echo "   - mini-lit: PID $MINI_LIT_PID"
 echo "   - pi-mono: PID $PI_MONO_PID"
 echo "   - sitegeist: PID $SITEGEIST_PID"
 echo ""

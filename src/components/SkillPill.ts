@@ -1,6 +1,6 @@
 import { html, icon, type TemplateResult } from "@mariozechner/mini-lit";
 import { Sparkles } from "lucide";
-import type { Skill } from "../storage/skills-repository.js";
+import type { Skill } from "../storage/stores/skills-store.js";
 import { SkillDialog } from "../dialogs/SkillDialog.js";
 
 export function SkillPill(nameOrSkill: string | Skill, clickable = false): TemplateResult {
