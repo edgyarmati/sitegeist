@@ -35,7 +35,8 @@
 		"sidePanel",
 		"userScripts",
 		"webNavigation",
-		"scripting"
+		"scripting",
+		"debugger"
 	],
 	"host_permissions": [
 		"https://*/*",

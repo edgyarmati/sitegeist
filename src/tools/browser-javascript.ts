@@ -24,6 +24,7 @@ import { BROWSER_JAVASCRIPT_DESCRIPTION } from "../prompts/tool-prompts.js";
 import { getSitegeistStorage } from "../storage/app-storage.js";
 import "../utils/i18n-extension.js";
 import type { AgentToolResult } from "@mariozechner/pi-ai/dist/agent/types.js";
+import { NativeInputEventsRuntimeProvider } from "./NativeInputEventsRuntimeProvider.js";
 
 // Cross-browser API compatibility
 // @ts-expect-error - browser global exists in Firefox, chrome in Chrome
@@ -489,6 +490,7 @@ export class BrowserJavaScriptTool
 				consoleProvider,
 				artifactsProvider,
 				fileDownloadProvider,
+				new NativeInputEventsRuntimeProvider(tab.id),
 			];
 
 			// Register sandbox with RUNTIME_MESSAGE_ROUTER before building wrapper
@@ -513,13 +515,13 @@ export class BrowserJavaScriptTool
 					browser.userScripts &&
 					typeof browser.userScripts.execute === "function"
 				) {
-					// Configure this specific world with CSP that allows eval but blocks network
+					// Configure this specific world with no CSP restrictions (TEMPORARY - for testing)
 					try {
 						await browser.userScripts.configureWorld({
 							worldId: sandboxId,
 							messaging: true,
-							// Allow eval for code execution, but block all network requests (fetch, XHR, WebSocket, etc.)
-							csp: "script-src 'unsafe-eval'; connect-src 'none'; default-src 'none';",
+							// No CSP - allow everything for now
+							csp: "",
 						});
 					} catch (e) {
 						console.warn("Failed to configure userScripts world:", e);

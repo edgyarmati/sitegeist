@@ -187,6 +187,27 @@ Output:
 
 ${ARTIFACTS_RUNTIME_PROVIDER_DESCRIPTION}
 
+Native Input Events (Trusted Browser Events):
+When regular JavaScript clicks/typing don't work (pages detect/block fake events), use these functions that dispatch REAL browser events:
+
+- await nativeClick(selector) - Click element using trusted browser event
+  * Finds element via selector, dispatches real mouse click at its center
+  * Example: await nativeClick('button[aria-label="Send"]')
+  * Throws error if selector not found
+
+- await nativeType(selector, text) - Type text into element using trusted keyboard events
+  * Focuses element, types each character as real keyboard input
+  * Example: await nativeType('input[name="email"]', 'test@example.com')
+  * Throws error if selector not found
+
+- await nativePress(key) - Press keyboard key using trusted keyboard event
+  * Simulates real key press (Enter, Escape, Tab, ArrowUp, ArrowDown, etc.)
+  * Example: await nativePress('Enter')
+  * Example: await nativePress('Escape')
+
+Use cases: WhatsApp automation, sites with anti-bot protection, React apps that ignore synthetic events
+Note: These use Chrome's debugger API for trusted events. Regular clicks/typing work fine for most sites.
+
 - return <value> - To capture and display a return value, you MUST use an explicit return statement
   * REQUIRED: Use return if you want to show a value in the output
   * Without return, the script executes successfully but no value is displayed (only console logs)
