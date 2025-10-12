@@ -20,6 +20,8 @@ export class SitegeistSessionListDialog extends DialogBase {
 	@state() private loading = true;
 	@state() private sessionLocks: Record<string, number> = {}; // sessionId -> windowId
 	@state() private currentWindowId: number | undefined;
+	@state() private searchQuery = "";
+	@state() private showDeleteMenu = false;
 
 	private onSelectCallback?: (sessionId: string) => void;
 	private onDeleteCallback?: (sessionId: string) => void;
@@ -28,6 +30,25 @@ export class SitegeistSessionListDialog extends DialogBase {
 
 	protected modalWidth = "min(600px, 90vw)";
 	protected modalHeight = "min(700px, 90vh)";
+
+	connectedCallback(): void {
+		super.connectedCallback();
+		// Close delete menu when clicking outside
+		document.addEventListener("click", this.handleDocumentClick);
+	}
+
+	disconnectedCallback(): void {
+		super.disconnectedCallback();
+		document.removeEventListener("click", this.handleDocumentClick);
+	}
+
+	private handleDocumentClick = (e: MouseEvent) => {
+		const target = e.target as HTMLElement;
+		// Close menu if clicking outside the delete button and menu
+		if (!target.closest(".delete-menu-container")) {
+			this.showDeleteMenu = false;
+		}
+	};
 
 	static async open(
 		onSelect: (sessionId: string) => void,
@@ -207,6 +228,66 @@ export class SitegeistSessionListDialog extends DialogBase {
 		}
 	}
 
+	private getFilteredSessions(): SessionMetadata[] {
+		if (!this.searchQuery.trim()) {
+			return this.sessions;
+		}
+
+		const query = this.searchQuery.toLowerCase();
+		return this.sessions.filter(
+			(session) =>
+				session.title.toLowerCase().includes(query) ||
+				session.preview.toLowerCase().includes(query),
+		);
+	}
+
+	private getTotalStats(): { totalCost: number; totalMessages: number; totalSessions: number } {
+		const filtered = this.getFilteredSessions();
+		return {
+			totalSessions: filtered.length,
+			totalCost: filtered.reduce((sum, s) => sum + s.usage.cost.total, 0),
+			totalMessages: filtered.reduce((sum, s) => sum + s.messageCount, 0),
+		};
+	}
+
+	private async handleDeleteOlderThan(days: number) {
+		const cutoffDate = new Date();
+		cutoffDate.setDate(cutoffDate.getDate() - days);
+		const cutoffISO = cutoffDate.toISOString();
+
+		const oldSessions = this.sessions.filter(
+			(s) => s.lastModified < cutoffISO,
+		);
+
+		if (oldSessions.length === 0) {
+			alert(i18n(`No sessions older than {days} days`).replace("{days}", days.toString()));
+			return;
+		}
+
+		const confirmed = confirm(
+			i18n(`Delete {count} sessions older than {days} days?`)
+				.replace("{count}", oldSessions.length.toString())
+				.replace("{days}", days.toString()),
+		);
+
+		if (!confirmed) return;
+
+		try {
+			const storage = getAppStorage();
+			if (!storage.sessions) return;
+
+			for (const session of oldSessions) {
+				await storage.sessions.deleteSession(session.id);
+				this.deletedSessions.add(session.id);
+			}
+
+			await this.loadSessionsAndLocks();
+		} catch (err) {
+			console.error("Failed to delete old sessions:", err);
+			alert(i18n("Failed to delete sessions. Check console for details."));
+		}
+	}
+
 	private async handleImport() {
 		try {
 			const input = document.createElement("input");
@@ -287,6 +368,9 @@ export class SitegeistSessionListDialog extends DialogBase {
 	}
 
 	protected override renderContent() {
+		const filteredSessions = this.getFilteredSessions();
+		const stats = this.getTotalStats();
+
 		return html`
 			${DialogContent({
 				className: "h-full flex flex-col",
@@ -296,7 +380,29 @@ export class SitegeistSessionListDialog extends DialogBase {
 						description: i18n("Load a previous conversation"),
 					})}
 
-					<div class="flex gap-2 mt-4">
+					<!-- Search bar -->
+					<div class="mt-4">
+						<input
+							type="text"
+							placeholder=${i18n("Search sessions...")}
+							.value=${this.searchQuery}
+							@input=${(e: InputEvent) => {
+								this.searchQuery = (e.target as HTMLInputElement).value;
+							}}
+							class="w-full px-3 py-2 text-sm rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+						/>
+					</div>
+
+					<!-- Stats summary -->
+					<div class="mt-3 px-3 py-2 rounded-md bg-secondary/30 text-xs text-muted-foreground">
+						${i18n("Total: {count} sessions · {messages} messages · ${cost}")
+							.replace("{count}", stats.totalSessions.toString())
+							.replace("{messages}", stats.totalMessages.toString())
+							.replace("{cost}", stats.totalCost.toFixed(4))}
+					</div>
+
+					<!-- Action buttons -->
+					<div class="flex gap-2 mt-3">
 						<button
 							class="flex-1 px-3 py-2 text-sm font-medium rounded-md border border-border bg-background text-foreground hover:bg-secondary transition-colors"
 							@click=${() => this.handleImport()}
@@ -309,45 +415,110 @@ export class SitegeistSessionListDialog extends DialogBase {
 						>
 							${i18n("Export All")}
 						</button>
+						<div class="relative delete-menu-container">
+							<button
+								class="px-3 py-2 text-sm font-medium rounded-md border border-border bg-background text-foreground hover:bg-secondary transition-colors"
+								@click=${() => (this.showDeleteMenu = !this.showDeleteMenu)}
+							>
+								${i18n("Delete Old")}
+							</button>
+							${
+								this.showDeleteMenu
+									? html`
+										<div class="absolute right-0 top-full mt-1 w-48 rounded-md border border-border bg-background shadow-lg z-50">
+											<button
+												class="w-full px-3 py-2 text-left text-sm hover:bg-secondary transition-colors rounded-t-md"
+												@click=${() => {
+													this.showDeleteMenu = false;
+													this.handleDeleteOlderThan(7);
+												}}
+											>
+												${i18n("Delete older than 7 days")}
+											</button>
+											<button
+												class="w-full px-3 py-2 text-left text-sm hover:bg-secondary transition-colors"
+												@click=${() => {
+													this.showDeleteMenu = false;
+													this.handleDeleteOlderThan(30);
+												}}
+											>
+												${i18n("Delete older than 30 days")}
+											</button>
+											<button
+												class="w-full px-3 py-2 text-left text-sm hover:bg-secondary transition-colors border-t border-border rounded-b-md"
+												@click=${() => {
+													this.showDeleteMenu = false;
+													this.handleDeleteOlderThan(90);
+												}}
+											>
+												${i18n("Delete older than 90 days")}
+											</button>
+										</div>
+									`
+									: ""
+							}
+						</div>
 					</div>
 
 					<div class="flex-1 overflow-y-auto mt-4 space-y-2">
 						${
 							this.loading
 								? html`<div class="text-center py-8 text-muted-foreground">${i18n("Loading...")}</div>`
-								: this.sessions.length === 0
-									? html`<div class="text-center py-8 text-muted-foreground">${i18n("No sessions yet")}</div>`
-									: this.sessions.map((session) => {
+								: filteredSessions.length === 0
+									? html`<div class="text-center py-8 text-muted-foreground">
+											${this.searchQuery ? "No matching sessions" : i18n("No sessions yet")}
+										</div>`
+									: filteredSessions.map((session) => {
 											const isLocked = this.isSessionLocked(session.id);
 											const isCurrent = this.isCurrentSession(session.id);
+											const cost = session.usage.cost.total;
 											return html`
 											<div
-												class="group flex items-start gap-3 p-3 rounded-lg border border-border ${
+												class="group flex items-start gap-3 p-4 rounded-lg border border-border ${
 													isLocked
 														? "opacity-50 cursor-not-allowed"
 														: "hover:bg-secondary/50 cursor-pointer"
-												} ${isCurrent ? "bg-secondary/30" : ""} transition-colors"
+												} ${isCurrent ? "bg-secondary/30 border-primary/30" : ""} transition-colors"
 												@click=${() => !isLocked && this.handleSelect(session.id)}
 											>
 												<div class="flex-1 min-w-0">
-													<div class="flex items-center gap-2">
-														<div class="font-medium text-sm text-foreground truncate">${session.title}</div>
+													<!-- Title and badges -->
+													<div class="flex items-center gap-2 mb-2">
+														<div class="font-semibold text-foreground truncate">${session.title}</div>
 														${
 															isCurrent
-																? html`<span class="px-1.5 py-0.5 text-xs rounded bg-primary/20 text-primary font-medium">
+																? html`<span class="px-2 py-0.5 text-xs rounded-full bg-primary/20 text-primary font-medium shrink-0">
 																	${i18n("Current")}
 																</span>`
 																: isLocked
-																	? html`<span class="px-1.5 py-0.5 text-xs rounded bg-destructive/20 text-destructive font-medium">
+																	? html`<span class="px-2 py-0.5 text-xs rounded-full bg-destructive/20 text-destructive font-medium shrink-0">
 																		${i18n("Locked")}
 																	</span>`
 																	: ""
 														}
 													</div>
-													<div class="text-xs text-muted-foreground mt-1">${this.formatDate(session.lastModified)}</div>
-													<div class="text-xs text-muted-foreground mt-1">
-														${session.messageCount} ${i18n("messages")} · ${formatUsage(session.usage)}
+
+													<!-- Stats row -->
+													<div class="flex items-center gap-3 text-xs text-muted-foreground">
+														<span class="font-medium">${this.formatDate(session.lastModified)}</span>
+														<span>·</span>
+														<span>${session.messageCount} ${i18n("messages")}</span>
+														<span>·</span>
+														<span>${formatUsage(session.usage)}</span>
+														<span>·</span>
+														<span class="font-semibold ${cost > 0.01 ? "text-orange-500" : "text-green-600"}">
+															$${cost.toFixed(4)}
+														</span>
 													</div>
+
+													<!-- Preview text if searching -->
+													${
+														this.searchQuery && session.preview
+															? html`<div class="text-xs text-muted-foreground mt-2 line-clamp-2">
+																	${session.preview.substring(0, 150)}${session.preview.length > 150 ? "..." : ""}
+																</div>`
+															: ""
+													}
 												</div>
 												<div class="flex gap-1">
 													<button

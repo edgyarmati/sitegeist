@@ -92,28 +92,30 @@ function downloadBlob(blob: Blob, filename: string) {
 
 async function generateIcon(iconSize: IconSize) {
 	const statusEl = document.getElementById(`status-${iconSize.size}`);
-	const downloadBtn = document.getElementById(`download-${iconSize.size}`);
+	const downloadBtnWrapper = document.getElementById(`download-${iconSize.size}`);
+	const downloadBtn = downloadBtnWrapper?.querySelector("button");
 
 	if (statusEl) statusEl.textContent = "Generating...";
-	if (downloadBtn) (downloadBtn as HTMLButtonElement).disabled = true;
+	if (downloadBtn) downloadBtn.disabled = true;
 
 	try {
 		const blob = await captureOrbAsImage(iconSize.size);
 
 		if (statusEl) statusEl.textContent = "✓ Ready";
 		if (downloadBtn) {
-			(downloadBtn as HTMLButtonElement).disabled = false;
+			downloadBtn.disabled = false;
 			downloadBtn.onclick = () => downloadBlob(blob, iconSize.name);
 		}
 	} catch (error) {
 		console.error(`Failed to generate ${iconSize.name}:`, error);
 		if (statusEl) statusEl.textContent = `✗ Error: ${error}`;
-		if (downloadBtn) (downloadBtn as HTMLButtonElement).disabled = true;
+		if (downloadBtn) downloadBtn.disabled = true;
 	}
 }
 
 async function generateAllIcons() {
-	const generateAllBtn = document.getElementById("generate-all-btn") as HTMLButtonElement;
+	const generateAllBtnWrapper = document.getElementById("generate-all-btn");
+	const generateAllBtn = generateAllBtnWrapper?.querySelector("button");
 	if (generateAllBtn) generateAllBtn.disabled = true;
 
 	for (const iconSize of ICON_SIZES) {
@@ -145,16 +147,12 @@ function renderIconsPage() {
 			<!-- Header -->
 			<div class="max-w-4xl mx-auto">
 				<div class="flex items-center gap-4 mb-8">
-					<${Button}
-						variant="ghost"
-						size="sm"
-						@click=${() => (window.location.href = "/debug.html")}
-					>
-						<span class="flex items-center gap-2">
-							${icon(ArrowLeft, "sm")}
-							<span>Back to Debug</span>
-						</span>
-					</${Button}>
+					${Button({
+						variant: "ghost",
+						size: "sm",
+						children: html`<span class="flex items-center gap-2">${icon(ArrowLeft, "sm")} <span>Back to Debug</span></span>`,
+						onClick: () => (window.location.href = "/debug.html"),
+					})}
 					<h1 class="text-3xl font-bold">Icon Generator</h1>
 				</div>
 
@@ -181,12 +179,12 @@ function renderIconsPage() {
 				<div class="bg-card border border-border rounded-lg p-6">
 					<div class="flex items-center justify-between mb-4">
 						<h2 class="text-xl font-semibold">Generate Icons</h2>
-						<${Button} id="generate-all-btn" @click=${generateAllIcons}>
-							<span class="flex items-center gap-2">
-								${icon(Download, "sm")}
-								<span>Generate All Icons</span>
-							</span>
-						</${Button}>
+						<div id="generate-all-btn">
+							${Button({
+								children: html`<span class="flex items-center gap-2">${icon(Download, "sm")} <span>Generate All Icons</span></span>`,
+								onClick: generateAllIcons,
+							})}
+						</div>
 					</div>
 
 					<div class="space-y-4">
@@ -203,23 +201,20 @@ function renderIconsPage() {
 										</div>
 									</div>
 									<div class="flex items-center gap-2">
-										<${Button}
-											size="sm"
-											variant="outline"
-											@click=${() => generateIcon(iconSize)}
-										>
-											Generate
-										</${Button}>
-										<${Button}
-											id="download-${iconSize.size}"
-											size="sm"
-											disabled
-										>
-											<span class="flex items-center gap-2">
-												${icon(Download, "sm")}
-												<span>Download</span>
-											</span>
-										</${Button}>
+										${Button({
+											size: "sm",
+											variant: "outline",
+											children: "Generate",
+											onClick: () => generateIcon(iconSize),
+										})}
+										<div id="download-${iconSize.size}">
+											${Button({
+												size: "sm",
+												disabled: true,
+												children: html`<span class="flex items-center gap-2">${icon(Download, "sm")} <span>Download</span></span>`,
+												onClick: () => {}, // Will be replaced dynamically
+											})}
+										</div>
 									</div>
 								</div>
 							`,

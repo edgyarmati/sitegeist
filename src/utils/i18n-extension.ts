@@ -61,6 +61,15 @@ declare module "@mariozechner/mini-lit" {
 		Import: string;
 		"Export All": string;
 		Export: string;
+		"No sessions older than {days} days": string;
+		"Delete {count} sessions older than {days} days?": string;
+		"Failed to delete sessions. Check console for details.": string;
+		"Delete Old": string;
+		"Delete older than 7 days": string;
+		"Delete older than 30 days": string;
+		"Delete older than 90 days": string;
+		"Search sessions...": string;
+		"Total: {count} sessions · {messages} messages · ${cost}": string;
 	}
 }
 
@@ -120,6 +129,15 @@ const sitegeistTranslations = {
 		Import: "Import",
 		"Export All": "Export All",
 		Export: "Export",
+		"No sessions older than {days} days": "No sessions older than {days} days",
+		"Delete {count} sessions older than {days} days?": "Delete {count} sessions older than {days} days?",
+		"Failed to delete sessions. Check console for details.": "Failed to delete sessions. Check console for details.",
+		"Delete Old": "Delete Old",
+		"Delete older than 7 days": "Delete older than 7 days",
+		"Delete older than 30 days": "Delete older than 30 days",
+		"Delete older than 90 days": "Delete older than 90 days",
+		"Search sessions...": "Search sessions...",
+		"Total: {count} sessions · {messages} messages · ${cost}": "Total: {count} sessions · {messages} messages · ${cost}",
 	},
 	de: {
 		"Permission request failed": "Berechtigungsanfrage fehlgeschlagen",
@@ -176,6 +194,15 @@ const sitegeistTranslations = {
 		Import: "Importieren",
 		"Export All": "Alle exportieren",
 		Export: "Exportieren",
+		"No sessions older than {days} days": "Keine Sitzungen älter als {days} Tage",
+		"Delete {count} sessions older than {days} days?": "{count} Sitzungen älter als {days} Tage löschen?",
+		"Failed to delete sessions. Check console for details.": "Löschen fehlgeschlagen. Prüfen Sie die Konsole für Details.",
+		"Delete Old": "Alte löschen",
+		"Delete older than 7 days": "Älter als 7 Tage löschen",
+		"Delete older than 30 days": "Älter als 30 Tage löschen",
+		"Delete older than 90 days": "Älter als 90 Tage löschen",
+		"Search sessions...": "Sitzungen durchsuchen...",
+		"Total: {count} sessions · {messages} messages · ${cost}": "Gesamt: {count} Sitzungen · {messages} Nachrichten · ${cost}",
 	},
 };
 
