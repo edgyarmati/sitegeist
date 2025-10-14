@@ -1,5 +1,6 @@
 import { html, i18n, icon } from "@mariozechner/mini-lit";
 import type { AgentTool, ToolResultMessage } from "@mariozechner/pi-ai";
+import { StringEnum } from "@mariozechner/pi-ai";
 import {
 	type Agent,
 	registerToolRenderer,
@@ -34,26 +35,15 @@ function markNavigationEnd() {
 // TYPES
 // ============================================================================
 
-const navigateSchema = Type.Union([
-	Type.Object({
-		url: Type.String({ description: "URL to navigate to in current tab" }),
-	}),
-	Type.Object({
-		url: Type.String({ description: "URL to open in new tab" }),
-		newTab: Type.Literal(true, { description: "Open in new tab" }),
-	}),
-	Type.Object({
-		history: Type.Union([Type.Literal("back"), Type.Literal("forward")], {
-			description: "Navigate browser history",
-		}),
-	}),
-	Type.Object({
-		listTabs: Type.Literal(true, { description: "List all open tabs" }),
-	}),
-	Type.Object({
-		switchToTab: Type.Number({ description: "Tab ID to switch to" }),
-	}),
-]);
+const navigateSchema = Type.Object({
+	url: Type.Optional(Type.String({ description: "URL to navigate to (in current tab or new tab if newTab is true)" })),
+	newTab: Type.Optional(Type.Boolean({ description: "Set to true to open URL in a new tab instead of current tab" })),
+	history: Type.Optional(StringEnum(["back", "forward"], {
+		description: "Navigate browser history (back or forward)",
+	})),
+	listTabs: Type.Optional(Type.Boolean({ description: "Set to true to list all open tabs" })),
+	switchToTab: Type.Optional(Type.Number({ description: "Tab ID to switch to (get IDs from listTabs)" })),
+});
 
 export type NavigateParams = Static<typeof navigateSchema>;
 
