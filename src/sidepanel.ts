@@ -14,6 +14,7 @@ import {
 	ProxyTab,
 	SettingsDialog,
 	setAppStorage,
+	setShowJsonMode,
 } from "@mariozechner/pi-web-ui";
 import { html, render } from "lit";
 import { History, Plus, Settings } from "lucide";
@@ -643,6 +644,11 @@ async function initApp() {
 		`,
 		document.body,
 	);
+
+	// Load showJsonMode setting
+	const stored = await chrome.storage.local.get("showJsonMode");
+	const showJsonModeEnabled = stored.showJsonMode || false;
+	setShowJsonMode(showJsonModeEnabled);
 
 	// Get current window ID for filtering tab events
 	const currentWindow = await chrome.windows.getCurrent();

@@ -1,6 +1,6 @@
 import { Button, icon, Switch } from "@mariozechner/mini-lit";
 import { getModel } from "@mariozechner/pi-ai";
-import { setAppStorage } from "@mariozechner/pi-web-ui";
+import { setAppStorage, setShowJsonMode } from "@mariozechner/pi-web-ui";
 import { html, render } from "lit";
 import { ArrowLeft, Bug, MousePointer2, Play, Sparkles } from "lucide";
 import "./debug/ReplPanel.js";
@@ -64,12 +64,19 @@ const TEST_PROMPTS: TestPrompt[] = [
 
 const renderDebugPage = async () => {
 	// Get current debugger mode state
-	const stored = await chrome.storage.local.get("debuggerMode");
+	const stored = await chrome.storage.local.get(["debuggerMode", "showJsonMode"]);
 	let debuggerMode = stored.debuggerMode || false;
+	let showJsonMode = stored.showJsonMode || false;
 
 	const updateDebuggerMode = async (enabled: boolean) => {
 		debuggerMode = enabled;
 		await chrome.storage.local.set({ debuggerMode: enabled });
+		renderDebugPage(); // Re-render to update UI
+	};
+
+	const updateShowJsonMode = async (enabled: boolean) => {
+		showJsonMode = enabled;
+		await chrome.storage.local.set({ showJsonMode: enabled });
 		renderDebugPage(); // Re-render to update UI
 	};
 
@@ -109,18 +116,32 @@ const renderDebugPage = async () => {
 						title: "Generate extension icons",
 					})}
 				</div>
-				<div class="flex items-center gap-2">
-					${icon(Bug, "sm")}
-					<span class="text-xs text-muted-foreground">Debugger Tool</span>
-					${Switch(
-						debuggerMode,
-						(checked: boolean) => {
-							updateDebuggerMode(checked);
-						},
-						undefined,
-						false,
-						"",
-					)}
+				<div class="flex items-center gap-4">
+					<div class="flex items-center gap-2">
+						${icon(Bug, "sm")}
+						<span class="text-xs text-muted-foreground">Debugger Tool</span>
+						${Switch(
+							debuggerMode,
+							(checked: boolean) => {
+								updateDebuggerMode(checked);
+							},
+							undefined,
+							false,
+							"",
+						)}
+					</div>
+					<div class="flex items-center gap-2">
+						<span class="text-xs text-muted-foreground">Show JSON</span>
+						${Switch(
+							showJsonMode,
+							(checked: boolean) => {
+								updateShowJsonMode(checked);
+							},
+							undefined,
+							false,
+							"",
+						)}
+					</div>
 				</div>
 			</div>
 
