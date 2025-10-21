@@ -10,7 +10,7 @@
 
 	# API proxy to backend
 	handle /api/* {
-		reverse_proxy sitegeist-site-backend-1:3000
+		reverse_proxy backend:3000
 	}
 
 	# Handle everything else with SPA routing
