@@ -55,7 +55,7 @@
 
         <!-- Explainer -->
         <div class="mb-26 text-center max-w-2xl mx-auto">
-            <h2 class="text-3xl font-bold mb-6">What is <span class="inline-block bg-gradient-to-r from-orange-600 to-yellow-400 bg-clip-text text-transparent">Sitegeist</span>?</h2>
+            <h2 class="text-3xl font-bold mb-6">What is <span class="inline-block bg-gradient-to-r from-orange-600 to-yellow-400 bg-clip-text text-transparent">Sitegeist?</span></h2>
             <p class="text-lg text-muted-foreground mb-4">
                 An AI assistant that lives in your browser. Built for collaboration, not autonomy theater. You guide, it executes. Automate repetitive web tasks, extract data from any website, and transform it into whatever you need.
             </p>
@@ -89,7 +89,7 @@
 
         <!-- What You Can Do -->
         <div class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-12">How about <span class="inline-block bg-gradient-to-r from-orange-600 to-yellow-400 bg-clip-text text-transparent">useful stuff</span>?</h2>
+            <h2 class="text-3xl font-bold text-center mb-12">How about <span class="inline-block bg-gradient-to-r from-orange-600 to-yellow-400 bg-clip-text text-transparent">useful stuff?</span></h2>
 
             <div class="space-y-24 max-w-4xl mx-auto">
                 <!-- Use Case 1 -->
@@ -324,7 +324,7 @@
 
         <!-- FAQ -->
         <div class="mb-16 max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12">FAQ</h2>
+            <h2 class="text-3xl font-bold text-center mb-12"><span class="inline-block bg-gradient-to-r from-orange-600 to-yellow-400 bg-clip-text text-transparent">FAQ</span></h2>
 
             <div class="space-y-6">
                 <!-- FAQ 1 -->
@@ -336,6 +336,14 @@
                 </div>
 
                 <!-- FAQ 2 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <h3 class="text-lg font-semibold mb-2">Are AI credits included in the subscription?</h3>
+                    <p class="text-sm text-muted-foreground">
+                        No. Sitegeist is a bring-your-own-key service—you use your own API keys with providers like OpenAI, Anthropic, or local models. We don't resell AI tokens. That said, we're exploring options for non-technical users who'd prefer not to manage API keys themselves.
+                    </p>
+                </div>
+
+                <!-- FAQ 3 -->
                 <div class="p-6 border border-border rounded-lg">
                     <h3 class="text-lg font-semibold mb-2">Do I need an account?</h3>
                     <p class="text-sm text-muted-foreground">
@@ -363,7 +371,7 @@
                 <div class="p-6 border border-border rounded-lg">
                     <h3 class="text-lg font-semibold mb-2">What data is stored and sent?</h3>
                     <p class="text-sm text-muted-foreground">
-                        Everything stays local—your settings, API keys, and chat history. Only your chat messages go to your chosen LLM provider, configured to not retain or train on your data. Sitegeist will also make requests to sitegeist.ai to check that you have a valid license.
+                        Everything stays on your computer—settings, API keys, and chat history. Only your messages go to your chosen AI provider. Sitegeist configures providers to not retain or train on your data when supported. Some authentication methods (like Anthropic's Claude Pro/Max OAuth tokens) can't be used directly from the browser due to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank" class="underline hover:text-foreground">CORS restrictions</a>. In this case, requests need a proxy. You can use your own, a trusted provider like corsproxy.io, or our default proxy which forwards requests without logging or storing any data. Sitegeist checks in with sitegeist.ai for license verification (your email and subscription status only).
                     </p>
                 </div>
 
@@ -372,6 +380,14 @@
                     <h3 class="text-lg font-semibold mb-2">Is Sitegeist open source?</h3>
                     <p class="text-sm text-muted-foreground">
                         No, Sitegeist is source available. As a Chrome extension, we must package all code in non-obfuscated form for Web Store reviewers. This means you (or a technical friend) can dissect it too. While Sitegeist is unlikely to become truly open-source, we ensure the sources we ship make it easy to review what Sitegeist is doing. You can also observe any and all network requests it performs.
+                    </p>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <h3 class="text-lg font-semibold mb-2">What about security risks?</h3>
+                    <p class="text-sm text-muted-foreground">
+                        Malicious websites can hide instructions that trick the AI into taking unwanted actions—like accessing your logged-in accounts. The technical term is <a href="https://brave.com/blog/unseeable-prompt-injections/" target="_blank" class="underline hover:text-foreground">prompt injection</a>, and all browser AI assistants face this challenge. Sitegeist implements mitigations, but no system is perfect—we believe transparency matters more than false promises. For safety, use Sitegeist in a <a href="https://support.google.com/chrome/answer/2364824?hl=en&co=GENIE.Platform%3DDesktop" target="_blank" class="underline hover:text-foreground">separate Chrome profile</a> where you're not logged into sensitive accounts.
                     </p>
                 </div>
             </div>
