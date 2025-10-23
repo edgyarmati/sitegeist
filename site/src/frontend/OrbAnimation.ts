@@ -1,16 +1,27 @@
 import { html, LitElement, type TemplateResult } from "lit";
 import { customElement } from "lit/decorators.js";
-import * as THREE from "three";
+import {
+	AdditiveBlending,
+	BackSide,
+	Color,
+	DoubleSide,
+	Mesh,
+	PerspectiveCamera,
+	Scene,
+	ShaderMaterial,
+	SphereGeometry,
+	WebGLRenderer,
+} from "three";
 
 @customElement("orb-animation")
 export class OrbAnimation extends LitElement {
 	private container?: HTMLDivElement;
-	private scene?: THREE.Scene;
-	private camera?: THREE.PerspectiveCamera;
-	private renderer?: THREE.WebGLRenderer;
-	private orb?: THREE.Mesh;
-	private innerOrb?: THREE.Mesh;
-	private outerOrb?: THREE.Mesh;
+	private scene?: Scene;
+	private camera?: PerspectiveCamera;
+	private renderer?: WebGLRenderer;
+	private orb?: Mesh;
+	private innerOrb?: Mesh;
+	private outerOrb?: Mesh;
 	private animationFrame?: number;
 	private time = 0;
 	private resizeHandler?: () => void;
@@ -77,14 +88,9 @@ export class OrbAnimation extends LitElement {
 		const backgroundColor = getComputedStyle(this.container).getPropertyValue("background-color") || "transparent";
 
 		// Scene setup
-		this.scene = new THREE.Scene();
-		this.camera = new THREE.PerspectiveCamera(
-			75,
-			this.container.clientWidth / this.container.clientHeight,
-			0.1,
-			1000,
-		);
-		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+		this.scene = new Scene();
+		this.camera = new PerspectiveCamera(75, this.container.clientWidth / this.container.clientHeight, 0.1, 1000);
+		this.renderer = new WebGLRenderer({ antialias: true, alpha: true });
 
 		this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
 		this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -170,64 +176,64 @@ export class OrbAnimation extends LitElement {
 		`;
 
 		// Create main orb with theme-aware colors
-		const orbGeometry = new THREE.SphereGeometry(1.5, 128, 128);
-		const orbMaterial = new THREE.ShaderMaterial({
+		const orbGeometry = new SphereGeometry(1.5, 128, 128);
+		const orbMaterial = new ShaderMaterial({
 			vertexShader: vertexShader,
 			fragmentShader: fragmentShader,
 			uniforms: {
 				time: { value: 0 },
 				// Brighter colors for light theme, darker for dark theme
-				color1: { value: isDark ? new THREE.Color(0xd94f00) : new THREE.Color(0xff8c00) },
-				color2: { value: isDark ? new THREE.Color(0xff6b00) : new THREE.Color(0xffa500) },
-				color3: { value: isDark ? new THREE.Color(0xd4a500) : new THREE.Color(0xffb700) },
+				color1: { value: isDark ? new Color(0xd94f00) : new Color(0xff8c00) },
+				color2: { value: isDark ? new Color(0xff6b00) : new Color(0xffa500) },
+				color3: { value: isDark ? new Color(0xd4a500) : new Color(0xffb700) },
 			},
 			transparent: true,
-			blending: THREE.AdditiveBlending,
-			side: THREE.DoubleSide,
+			blending: AdditiveBlending,
+			side: DoubleSide,
 			depthWrite: false,
 		});
 
-		this.orb = new THREE.Mesh(orbGeometry, orbMaterial);
+		this.orb = new Mesh(orbGeometry, orbMaterial);
 		this.scene.add(this.orb);
 
 		// Create inner morphing layer
-		const innerGeometry = new THREE.SphereGeometry(1.2, 128, 128);
-		const innerMaterial = new THREE.ShaderMaterial({
+		const innerGeometry = new SphereGeometry(1.2, 128, 128);
+		const innerMaterial = new ShaderMaterial({
 			vertexShader: vertexShader,
 			fragmentShader: fragmentShader,
 			uniforms: {
 				time: { value: 0 },
-				color1: { value: isDark ? new THREE.Color(0x2d8b3d) : new THREE.Color(0x4caf50) },
-				color2: { value: isDark ? new THREE.Color(0x1565c0) : new THREE.Color(0x2196f3) },
-				color3: { value: isDark ? new THREE.Color(0x7b1fa2) : new THREE.Color(0x9c27b0) },
+				color1: { value: isDark ? new Color(0x2d8b3d) : new Color(0x4caf50) },
+				color2: { value: isDark ? new Color(0x1565c0) : new Color(0x2196f3) },
+				color3: { value: isDark ? new Color(0x7b1fa2) : new Color(0x9c27b0) },
 			},
 			transparent: true,
-			blending: THREE.AdditiveBlending,
-			side: THREE.BackSide,
+			blending: AdditiveBlending,
+			side: BackSide,
 			depthWrite: false,
 		});
 
-		this.innerOrb = new THREE.Mesh(innerGeometry, innerMaterial);
+		this.innerOrb = new Mesh(innerGeometry, innerMaterial);
 		this.scene.add(this.innerOrb);
 
 		// Create outer wispy layer
-		const outerGeometry = new THREE.SphereGeometry(1.8, 64, 64);
-		const outerMaterial = new THREE.ShaderMaterial({
+		const outerGeometry = new SphereGeometry(1.8, 64, 64);
+		const outerMaterial = new ShaderMaterial({
 			vertexShader: vertexShader,
 			fragmentShader: fragmentShader,
 			uniforms: {
 				time: { value: 0 },
-				color1: { value: isDark ? new THREE.Color(0xc2185b) : new THREE.Color(0xe91e63) },
-				color2: { value: isDark ? new THREE.Color(0xd84315) : new THREE.Color(0xff5722) },
-				color3: { value: isDark ? new THREE.Color(0x512da8) : new THREE.Color(0x673ab7) },
+				color1: { value: isDark ? new Color(0xc2185b) : new Color(0xe91e63) },
+				color2: { value: isDark ? new Color(0xd84315) : new Color(0xff5722) },
+				color3: { value: isDark ? new Color(0x512da8) : new Color(0x673ab7) },
 			},
 			transparent: true,
-			blending: THREE.AdditiveBlending,
-			side: THREE.DoubleSide,
+			blending: AdditiveBlending,
+			side: DoubleSide,
 			depthWrite: false,
 		});
 
-		this.outerOrb = new THREE.Mesh(outerGeometry, outerMaterial);
+		this.outerOrb = new Mesh(outerGeometry, outerMaterial);
 		this.scene.add(this.outerOrb);
 	}
 
@@ -239,9 +245,9 @@ export class OrbAnimation extends LitElement {
 		this.time += 0.01;
 
 		// Update shader uniforms with different time speeds
-		(this.orb.material as THREE.ShaderMaterial).uniforms.time.value = this.time;
-		(this.innerOrb.material as THREE.ShaderMaterial).uniforms.time.value = this.time * 1.5;
-		(this.outerOrb.material as THREE.ShaderMaterial).uniforms.time.value = this.time * 0.7;
+		(this.orb.material as ShaderMaterial).uniforms.time.value = this.time;
+		(this.innerOrb.material as ShaderMaterial).uniforms.time.value = this.time * 1.5;
+		(this.outerOrb.material as ShaderMaterial).uniforms.time.value = this.time * 0.7;
 
 		// Complex rotating motions for smooshing effect
 		this.orb.rotation.y = this.time * 0.3;
