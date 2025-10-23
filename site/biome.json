@@ -1,0 +1,20 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.2.6/schema.json",
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"indentStyle": "tab",
+		"indentWidth": 3,
+		"lineWidth": 120
+	},
+	"files": {
+		"includes": ["src/**/*", "scripts/**/*", "*.json", "*.md", "!**/node_modules/**/*", "!**/*.css"],
+		"experimentalScannerIgnores": ["node_modules"]
+	}
+}

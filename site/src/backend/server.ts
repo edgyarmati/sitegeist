@@ -1,11 +1,14 @@
-import cors from "cors";
-import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { createApiRouter } from "./api-server.js";
-import { createHandlers } from "./handlers.js";
-import { FileStore } from "./storage.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import express from "express";
 import type { EmailSignup } from "../shared/types.js";
+import { createApiRouter } from "./api-server.js";
+import { createAuthMiddleware } from "./auth-middleware.js";
+import { createHandlers } from "./handlers.js";
+import { SettingsManager } from "./settings.js";
+import { FileStore } from "./storage.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,15 +29,32 @@ async function startServer() {
 
 	console.log(`✓ Initialized email storage at ${signupsPath}`);
 
+	// Initialize settings
+	const settingsPath = path.join(DATA_DIR, "settings.json");
+	const settings = new SettingsManager(settingsPath);
+
+	if (settings.isSetupRequired()) {
+		console.log("⚠ Setup required - visit /admin to set password");
+	} else {
+		console.log("✓ Settings loaded");
+	}
+
 	// Create API handlers
-	const handlers = createHandlers(signupsStore);
+	const handlers = createHandlers(signupsStore, settings);
 
 	// Create Express app
 	const app = express();
 
 	// Middleware
 	app.use(cors());
+	app.use(cookieParser());
 	app.use(express.json());
+
+	// Auth middleware (protects admin routes) - uses lazy evaluation
+	app.use(
+		"/api",
+		createAuthMiddleware(() => settings.getIronSecret()),
+	);
 
 	// API routes (auto-generated from handlers)
 	const apiRouter = express.Router();
@@ -49,7 +69,12 @@ async function startServer() {
 
 		app.use(express.static(staticPath));
 
-		// SPA fallback - serve index.html for all non-API routes
+		// Admin SPA fallback
+		app.get("/admin*", (_req, res) => {
+			res.sendFile(path.join(staticPath, "admin/index.html"));
+		});
+
+		// Landing page SPA fallback - serve index.html for all other non-API routes
 		app.use((_req, res) => {
 			res.sendFile(path.join(staticPath, "index.html"));
 		});

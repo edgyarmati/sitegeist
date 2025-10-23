@@ -1,4 +1,4 @@
-import type { SignupRequest, SignupResponse } from "./types.js";
+import type { EmailSignup, SignupRequest, SignupResponse } from "./types.js";
 
 // Health check response
 export interface HealthResponse {
@@ -6,13 +6,33 @@ export interface HealthResponse {
 	timestamp: string;
 }
 
+// Status response
+export interface StatusResponse {
+	setupRequired: boolean;
+}
+
+// Setup/Login request
+export interface AuthRequest {
+	password: string;
+}
+
 // API interface - shared contract between client and server
 export interface Api {
-	// Health check (no auth required)
+	// Public endpoints (no auth required)
 	health(): Promise<HealthResponse>;
-
-	// Email signup (no auth required)
 	signup(request: SignupRequest): Promise<SignupResponse>;
+	status(): Promise<StatusResponse>;
+
+	// Setup & Auth (no auth required)
+	// biome-ignore lint/suspicious/noExplicitAny: fine
+	setup(request: AuthRequest, ...extra: any[]): Promise<void>;
+	// biome-ignore lint/suspicious/noExplicitAny: fine
+	login(request: AuthRequest, ...extra: any[]): Promise<void>;
+	// biome-ignore lint/suspicious/noExplicitAny: fine
+	logout(...extra: any[]): Promise<void>;
+
+	// Admin endpoints (auth required)
+	listSignups(): Promise<EmailSignup[]>;
 }
 
 // Route definitions - used to auto-generate client and server
@@ -23,8 +43,18 @@ export interface RouteDefinition {
 }
 
 export const apiRoutes: Record<keyof Api, RouteDefinition> = {
+	// Public endpoints
 	health: { method: "GET", path: "/health", auth: false },
 	signup: { method: "POST", path: "/signup", auth: false },
+	status: { method: "GET", path: "/status", auth: false },
+
+	// Setup & Auth
+	setup: { method: "POST", path: "/setup", auth: false },
+	login: { method: "POST", path: "/login", auth: false },
+	logout: { method: "POST", path: "/logout", auth: false },
+
+	// Admin endpoints
+	listSignups: { method: "GET", path: "/admin/signups", auth: true },
 };
 
 // Helper types

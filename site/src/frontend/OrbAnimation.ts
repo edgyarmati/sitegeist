@@ -5,12 +5,12 @@ import * as THREE from "three";
 @customElement("orb-animation")
 export class OrbAnimation extends LitElement {
 	private container?: HTMLDivElement;
-	private scene?: typeof THREE.Scene;
-	private camera?: typeof THREE.PerspectiveCamera;
-	private renderer?: typeof THREE.WebGLRenderer;
-	private orb?: typeof THREE.Mesh;
-	private innerOrb?: typeof THREE.Mesh;
-	private outerOrb?: typeof THREE.Mesh;
+	private scene?: THREE.Scene;
+	private camera?: THREE.PerspectiveCamera;
+	private renderer?: THREE.WebGLRenderer;
+	private orb?: THREE.Mesh;
+	private innerOrb?: THREE.Mesh;
+	private outerOrb?: THREE.Mesh;
 	private animationFrame?: number;
 	private time = 0;
 	private resizeHandler?: () => void;
@@ -90,8 +90,8 @@ export class OrbAnimation extends LitElement {
 		this.renderer.setPixelRatio(window.devicePixelRatio);
 		this.renderer.setClearColor(0x000000, 0);
 		this.renderer.domElement.style.backgroundColor = backgroundColor;
-		this.renderer.domElement.style.opacity = '0';
-		this.renderer.domElement.style.transition = 'opacity 1s ease-in-out';
+		this.renderer.domElement.style.opacity = "0";
+		this.renderer.domElement.style.transition = "opacity 1s ease-in-out";
 		this.container.appendChild(this.renderer.domElement);
 
 		// Center camera and position for optimal view (3.8 prevents edge clipping)
@@ -203,7 +203,6 @@ export class OrbAnimation extends LitElement {
 			},
 			transparent: true,
 			blending: THREE.AdditiveBlending,
-			// @ts-expect-error - BackSide exists at runtime but may not be in types
 			side: THREE.BackSide,
 			depthWrite: false,
 		});
@@ -240,9 +239,9 @@ export class OrbAnimation extends LitElement {
 		this.time += 0.01;
 
 		// Update shader uniforms with different time speeds
-		(this.orb.material as typeof THREE.ShaderMaterial).uniforms.time.value = this.time;
-		(this.innerOrb.material as typeof THREE.ShaderMaterial).uniforms.time.value = this.time * 1.5;
-		(this.outerOrb.material as typeof THREE.ShaderMaterial).uniforms.time.value = this.time * 0.7;
+		(this.orb.material as THREE.ShaderMaterial).uniforms.time.value = this.time;
+		(this.innerOrb.material as THREE.ShaderMaterial).uniforms.time.value = this.time * 1.5;
+		(this.outerOrb.material as THREE.ShaderMaterial).uniforms.time.value = this.time * 0.7;
 
 		// Complex rotating motions for smooshing effect
 		this.orb.rotation.y = this.time * 0.3;
@@ -274,8 +273,8 @@ export class OrbAnimation extends LitElement {
 		if (!this.hasFadedIn) {
 			this.hasFadedIn = true;
 			requestAnimationFrame(() => {
-				if (this.renderer && this.renderer.domElement) {
-					this.renderer.domElement.style.opacity = '1';
+				if (this.renderer?.domElement) {
+					this.renderer.domElement.style.opacity = "1";
 				}
 			});
 		}

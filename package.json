@@ -11,7 +11,7 @@
 		"build": "npm run build:chrome",
 		"dev": "concurrently \"node ./scripts/build.mjs --watch\" \"tailwindcss -i ./src/app.css -o ./dist-chrome/app.css --watch\" \"node ./scripts/dev-server.mjs\"",
 		"typecheck": "tsc --noEmit",
-		"check": "biome check --write . && npm run typecheck",
+		"check": "biome check --write . && tsc --noEmit && cd site && npm run check",
 		"prepare": "husky"
 	},
 	"dependencies": {

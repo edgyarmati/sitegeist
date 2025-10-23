@@ -36,7 +36,8 @@ function setupSignupForm(formId: string, emailInputId: string, successMessageId:
 			showSuccess(form, successMessage, errorMessage);
 		} catch (error) {
 			console.error("Signup error:", error);
-			const message = error instanceof Error ? error.message.replace("API error: ", "") : "Network error. Please try again.";
+			const message =
+				error instanceof Error ? error.message.replace("API error: ", "") : "Network error. Please try again.";
 			showError(errorMessage, successMessage, message);
 		} finally {
 			submitButton.disabled = false;

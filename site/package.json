@@ -1,28 +1,37 @@
 {
-  "name": "sitegeist-site",
-  "version": "0.1.0",
-  "description": "Sitegeist landing page with email signup",
-  "type": "module",
-  "scripts": {
-    "dev": "./run.sh dev",
-    "build": "./run.sh build",
-    "prod": "./run.sh prod"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "lit": "^3.2.1",
-    "three": "^0.180.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/cli": "^4.1.14",
-    "@tailwindcss/vite": "^4.1.14",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.3",
-    "@types/node": "^24.5.2",
-    "tailwindcss": "^4.1.14",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3",
-    "vite": "^7.1.9"
-  }
+	"name": "sitegeist-site",
+	"version": "0.1.0",
+	"description": "Sitegeist landing page with email signup",
+	"type": "module",
+	"scripts": {
+		"dev": "./run.sh dev",
+		"build": "./run.sh build",
+		"prod": "./run.sh prod",
+		"check": "biome check --write . && tsc --noEmit"
+	},
+	"dependencies": {
+		"@mariozechner/mini-lit": "file:../../mini-lit",
+		"@types/bcrypt": "^6.0.0",
+		"@types/cookie-parser": "^1.4.9",
+		"@vaadin/router": "^2.0.0",
+		"bcrypt": "^6.0.0",
+		"cookie-parser": "^1.4.7",
+		"cors": "^2.8.5",
+		"express": "^5.1.0",
+		"iron-session": "^8.0.4",
+		"lit": "^3.2.1",
+		"three": "^0.180.0"
+	},
+	"devDependencies": {
+		"@tailwindcss/cli": "^4.1.14",
+		"@tailwindcss/vite": "^4.1.14",
+		"@types/cors": "^2.8.19",
+		"@types/express": "^5.0.3",
+		"@types/node": "^24.5.2",
+		"@types/three": "^0.180.0",
+		"tailwindcss": "^4.1.14",
+		"tsx": "^4.20.6",
+		"typescript": "^5.9.3",
+		"vite": "^7.1.9"
+	}
 }

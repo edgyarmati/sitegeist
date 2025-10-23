@@ -29,7 +29,7 @@
 		"lineWidth": 120
 	},
 	"files": {
-		"includes": ["src/**/*", "scripts/**/*", "*.json", "*.md", "!**/node_modules/**/*"],
+		"includes": ["src/**/*", "scripts/**/*", "*.json", "*.md", "!**/node_modules/**/*", "!site"],
 		"experimentalScannerIgnores": ["node_modules"]
 	}
 }
