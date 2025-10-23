@@ -10,19 +10,19 @@
 		"check": "biome check --write . && tsc --noEmit"
 	},
 	"dependencies": {
-		"@mariozechner/mini-lit": "file:../../mini-lit",
 		"@types/bcrypt": "^6.0.0",
 		"@types/cookie-parser": "^1.4.9",
-		"@vaadin/router": "^2.0.0",
 		"bcrypt": "^6.0.0",
 		"cookie-parser": "^1.4.7",
 		"cors": "^2.8.5",
 		"express": "^5.1.0",
-		"iron-session": "^8.0.4",
-		"lit": "^3.2.1",
-		"three": "^0.180.0"
+		"iron-session": "^8.0.4"
 	},
 	"devDependencies": {
+		"@mariozechner/mini-lit": "file:../../mini-lit",
+		"@vaadin/router": "^2.0.0",
+		"lit": "^3.2.1",
+		"three": "^0.180.0",
 		"@tailwindcss/cli": "^4.1.14",
 		"@tailwindcss/vite": "^4.1.14",
 		"@types/cors": "^2.8.19",
