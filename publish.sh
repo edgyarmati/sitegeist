@@ -33,9 +33,21 @@ cd "${OLDPWD}"
 # Clean up temp directory
 rm -rf "${TEMP_DIR}"
 
-echo "📤 Uploading to server..."
-# Upload using the upload CLI tool
-upload "${ZIP_NAME}"
-upload "docs/sitegeist.html"
+echo "📝 Creating version.json..."
+# Extract version from dist-chrome manifest.json
+VERSION=$(node -p "require('./dist-chrome/manifest.json').version")
+echo "{\"version\":\"${VERSION}\"}" > version.json
 
-echo "✅ Done!"
+echo "📤 Uploading to server..."
+# Upload to sitegeist.ai uploads directory
+SERVER="slayer.marioslab.io"
+REMOTE_PATH="/home/badlogic/sitegeist.ai/uploads"
+
+# Ensure uploads directory exists on server
+ssh "${SERVER}" "mkdir -p ${REMOTE_PATH}"
+
+# Upload files
+scp "${ZIP_NAME}" "${SERVER}:${REMOTE_PATH}/"
+scp "version.json" "${SERVER}:${REMOTE_PATH}/"
+
+echo "✅ Done! Version ${VERSION} published to sitegeist.ai/uploads/"

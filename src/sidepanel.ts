@@ -23,6 +23,7 @@ import { CostsTab } from "./dialogs/CostsTab.js";
 import { SessionCostDialog } from "./dialogs/SessionCostDialog.js";
 import { SitegeistSessionListDialog } from "./dialogs/SessionListDialog.js";
 import { SkillsTab } from "./dialogs/SkillsTab.js";
+import { UpdateNotificationDialog } from "./dialogs/UpdateNotificationDialog.js";
 import { UserScriptsPermissionDialog } from "./dialogs/UserScriptsPermissionDialog.js";
 import { browserMessageTransformer } from "./messages/message-transformer.js";
 import {
@@ -701,6 +702,31 @@ async function testSteps(): Promise<boolean> {
 }
 
 // ============================================================================
+// UPDATE CHECK
+// ============================================================================
+async function checkForUpdates() {
+	try {
+		const currentVersion = chrome.runtime.getManifest().version;
+
+		// Fetch latest version
+		const response = await fetch("https://sitegeist.ai/uploads/version.json", {
+			cache: "no-cache",
+		});
+		const data = await response.json();
+		const latestVersion = data.version;
+
+		// Show dialog if server version is newer
+		if (latestVersion !== currentVersion) {
+			// Show update dialog - blocks until extension is updated and restarted
+			await UpdateNotificationDialog.show(latestVersion);
+		}
+	} catch (err) {
+		console.warn("[Sidepanel] Failed to check for updates:", err);
+		// Silently fail - don't block startup
+	}
+}
+
+// ============================================================================
 // INIT
 // ============================================================================
 async function initApp() {
@@ -738,6 +764,9 @@ async function initApp() {
 	if (!chrome.userScripts) {
 		await UserScriptsPermissionDialog.request();
 	}
+
+	// Check for updates on startup
+	await checkForUpdates();
 
 	// Initialize default skills
 	const { initializeDefaultSkills } = await import("./tools/skill.js");

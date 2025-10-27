@@ -8,3 +8,4 @@ sitegeist-latest.zip
 .playwright-mcp/
 *.screenflow/
 *.mp4
+version.json

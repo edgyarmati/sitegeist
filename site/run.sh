@@ -90,6 +90,9 @@ deploy)
 
     sync_files
 
+    echo "Creating uploads directory on server..."
+    ssh $SERVER "mkdir -p $SERVER_DIR/uploads"
+
     echo "Restarting services on remote server..."
     ssh $SERVER "cd $SERVER_DIR && ./run.sh stop && ./run.sh prod"
 

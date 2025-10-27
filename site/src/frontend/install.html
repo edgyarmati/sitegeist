@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" class="dark bg-background text-foreground">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitegeist - Installation Guide</title>
+    <link rel="stylesheet" href="app.css">
+    <script>
+        // Force dark theme
+        localStorage.setItem("theme", "dark");
+        document.documentElement.classList.add("dark");
+    </script>
+</head>
+<body class="px-4 py-6 md:py-12">
+    <div class="max-w-4xl mx-auto w-full">
+        <!-- Header with Orb Animation -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl mb-8 font-bold">Sitegeist</h1>
+            <p class="text-xl md:text-2xl text-muted-foreground">
+                Your AI companion for the web to
+            </p>
+            <p class="text-3xl font-semibold mb-12 text-center">
+                <span class="rotating-word block" id="tagline-word">automate</span>
+            </p>
+            <div class="w-full max-w-[320px] aspect-square mx-auto mb-12">
+                <orb-animation class="block w-full h-full"></orb-animation>
+            </div>
+        </header>
+
+        <!-- Thank You Card -->
+        <div class="p-8 mb-16 text-center">
+            <h2 class="text-2xl font-bold mb-4">Thank You for <span class="inline-block bg-gradient-to-r from-orange-600 to-yellow-400 bg-clip-text text-transparent">Participating!</span></h2>
+            <p class="text-muted-foreground">You're one of the early alpha testers helping me shape this little silly thing. Any and all feedback is welcome—including questions like "wtf is this?" I genuinely appreciate your patience and input as we figure this out together.</p>
+        </div>
+
+        <!-- Installation Instructions -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Installation <span class="inline-block bg-gradient-to-r from-orange-600 to-yellow-400 bg-clip-text text-transparent">Instructions</span></h2>
+
+            <div class="space-y-6 max-w-3xl mx-auto">
+                <!-- Step 1 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">1</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Check Your Chrome Version</h3>
+                            <p class="text-sm text-muted-foreground">Make sure you have Google Chrome version 141 or higher installed.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">2</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Download Sitegeist</h3>
+                            <p class="text-sm text-muted-foreground mb-3">Click the download button below to get <code class="px-2 py-1 rounded bg-muted text-xs font-mono">sitegeist-latest.zip</code></p>
+                            <a href="https://sitegeist.ai/uploads/sitegeist-latest.zip" class="inline-block px-6 py-3 font-medium rounded-lg bg-orange-500/20 hover:bg-orange-500/30 border border-orange-500/50 text-foreground transition-all hover:shadow-lg hover:shadow-orange-500/20">
+                                Download Sitegeist
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">3</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Unzip to a Known Location</h3>
+                            <p class="text-sm text-muted-foreground mb-2">Extract the zip file to an easy-to-find location. For example:</p>
+                            <ul class="list-disc ml-6 text-sm text-muted-foreground space-y-1">
+                                <li><strong>Windows:</strong> <code class="px-2 py-1 rounded bg-muted text-xs font-mono">C:\Users\YourName\Desktop\sitegeist</code></li>
+                                <li><strong>macOS:</strong> <code class="px-2 py-1 rounded bg-muted text-xs font-mono">~/Desktop/sitegeist</code></li>
+                                <li><strong>Linux:</strong> <code class="px-2 py-1 rounded bg-muted text-xs font-mono">~/Desktop/sitegeist</code></li>
+                            </ul>
+                            <p class="text-sm text-muted-foreground mt-2">After unzipping, you should have a folder named <code class="px-2 py-1 rounded bg-muted text-xs font-mono">sitegeist</code> containing the extension files.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">4</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Open Chrome Extensions Page</h3>
+                            <p class="text-sm text-muted-foreground">Open Chrome and type <code class="px-2 py-1 rounded bg-muted text-xs font-mono">chrome://extensions</code> in the address bar, then press Enter.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">5</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Enable Developer Mode</h3>
+                            <p class="text-sm text-muted-foreground">Toggle the "Developer mode" switch in the top right corner of the extensions page.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">6</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Load Unpacked Extension</h3>
+                            <p class="text-sm text-muted-foreground">Click the "Load unpacked" button that appears, then select your <code class="px-2 py-1 rounded bg-muted text-xs font-mono">Desktop/sitegeist</code> folder.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 7 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">7</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Configure Extension Settings</h3>
+                            <p class="text-sm text-muted-foreground mb-2">Locate the Sitegeist extension in "All extensions" and click "Details". Make sure the following options are enabled:</p>
+                            <ul class="list-disc ml-6 text-sm text-muted-foreground space-y-1">
+                                <li><strong>Allow user scripts</strong></li>
+                                <li><strong>Pin to toolbar</strong></li>
+                                <li><strong>Allow access to file URLs</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 8 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">8</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Open Sitegeist</h3>
+                            <p class="text-sm text-muted-foreground mb-2">Use the keyboard shortcut to open/close Sitegeist:</p>
+                            <ul class="list-disc ml-6 text-sm text-muted-foreground space-y-1">
+                                <li><strong>macOS:</strong> <kbd class="px-2 py-1 rounded bg-secondary border border-border text-xs font-mono">CMD</kbd> + <kbd class="px-2 py-1 rounded bg-secondary border border-border text-xs font-mono">SHIFT</kbd> + <kbd class="px-2 py-1 rounded bg-secondary border border-border text-xs font-mono">S</kbd></li>
+                                <li><strong>Windows/Linux:</strong> <kbd class="px-2 py-1 rounded bg-secondary border border-border text-xs font-mono">CTRL</kbd> + <kbd class="px-2 py-1 rounded bg-secondary border border-border text-xs font-mono">SHIFT</kbd> + <kbd class="px-2 py-1 rounded bg-secondary border border-border text-xs font-mono">S</kbd></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 9 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">9</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Enter API Token</h3>
+                            <p class="text-sm text-muted-foreground">On your first message submission, you'll be prompted to enter an API token. Contact Mario to get your token.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Updating Instructions -->
+        <div id="updating" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Updating <span class="inline-block bg-gradient-to-r from-orange-600 to-yellow-400 bg-clip-text text-transparent">Sitegeist</span></h2>
+
+            <div class="space-y-6 max-w-3xl mx-auto">
+                <!-- Update Step 1 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">1</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Download Latest Version</h3>
+                            <p class="text-sm text-muted-foreground mb-3">Click the download button below to get <code class="px-2 py-1 rounded bg-muted text-xs font-mono">sitegeist-latest.zip</code></p>
+                            <a href="https://sitegeist.ai/uploads/sitegeist-latest.zip" class="inline-block px-6 py-3 font-medium rounded-lg bg-orange-500/20 hover:bg-orange-500/30 border border-orange-500/50 text-foreground transition-all hover:shadow-lg hover:shadow-orange-500/20">
+                                Download Latest Version
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Update Step 2 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">2</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Replace Extension Files</h3>
+                            <p class="text-sm text-muted-foreground">Unpack the zip file and replace all files in your existing <code class="px-2 py-1 rounded bg-muted text-xs font-mono">Desktop/sitegeist</code> folder with the new files.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Update Step 3 -->
+                <div class="p-6 border border-border rounded-lg">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/50 flex items-center justify-center font-bold text-sm">3</div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold mb-2">Restart Chrome</h3>
+                            <p class="text-sm text-muted-foreground">Close and restart Chrome for the changes to take effect.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-lg bg-orange-500/5 border border-orange-500/20">
+                    <p class="text-sm text-muted-foreground"><strong>Note:</strong> If Sitegeist doesn't open after updating, contact Mario for assistance.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Getting Started -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Getting <span class="inline-block bg-gradient-to-r from-orange-600 to-yellow-400 bg-clip-text text-transparent">Started</span></h2>
+
+            <div class="p-6 border border-border rounded-lg max-w-3xl mx-auto">
+                <p class="text-sm text-muted-foreground mb-4">Open Sitegeist, click on the examples, and try to figure it out. Don't hesitate to yell at Sitegeist if it's not doing what it's supposed to do. Try to work with it collaboratively—correct it, give it feedback, tell it to consider other options if it gets stuck.</p>
+                <p class="text-sm text-muted-foreground mb-4">If you run into issues, call Mario.</p>
+
+                <div class="p-4 rounded-lg bg-orange-500/5 border border-orange-500/20">
+                    <p class="text-sm text-muted-foreground"><strong>Note:</strong> Sitegeist is alpha software. It contains bugs and might do silly things. If you need to immediately stop Sitegeist from doing what it's doing, press <kbd class="px-2 py-1 rounded bg-secondary border border-border text-xs font-mono">Escape</kbd> or click the stop button.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy & Security -->
+        <div class="mb-16 max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Privacy & <span class="inline-block bg-gradient-to-r from-orange-600 to-yellow-400 bg-clip-text text-transparent">Security</span></h2>
+
+            <div class="p-6 border border-border rounded-lg mb-6">
+                <h3 class="text-xl font-semibold mb-3">Your Data Stays Private</h3>
+                <div class="space-y-2 text-sm text-muted-foreground">
+                    <p><strong>Settings & API keys:</strong> Stored only on your computer. Never sent anywhere.</p>
+                    <p><strong>Chat history:</strong> Stored only on your computer in IndexedDB.</p>
+                    <p><strong>When you send messages:</strong> Your message text and any attachments you include are sent to your chosen AI provider (default: Anthropic) to generate responses. These providers are configured to not retain your data or use it for training.</p>
+                    <p><strong>CORS proxy:</strong> ON BY DEFAULT. Needed for Anthropic OAuth tokens and Z-AI API due to CORS restrictions. Requests to the AI go through <code class="px-2 py-1 rounded bg-muted text-xs font-mono">https://proxy.mariozechner.at/proxy</code> which does not retain or log data. You can run your own CORS proxy or use a service like <a href="https://corsproxy.io" class="text-primary hover:underline" target="_blank">corsproxy.io</a></p>
+                </div>
+            </div>
+
+            <div class="p-6 border border-border rounded-lg">
+                <h3 class="text-xl font-semibold mb-3">Why Does Sitegeist Need So Many Permissions?</h3>
+                <p class="text-sm text-muted-foreground mb-3">Sitegeist needs special browser permissions to let the AI control your browser. Here's what each permission does in plain English:</p>
+
+                <ul class="list-disc ml-6 text-sm text-muted-foreground space-y-1 mb-4">
+                    <li><strong>Storage:</strong> Saves your sessions, settings, and API keys on your computer</li>
+                    <li><strong>Unlimited storage:</strong> Prevents the browser from deleting your saved sessions and settings</li>
+                    <li><strong>Active tab:</strong> Lets the AI see which website you're currently on</li>
+                    <li><strong>Side panel:</strong> Creates the Sitegeist chat interface</li>
+                    <li><strong>User scripts:</strong> Allows the AI to run code it generates on the current webpage (this is how it interacts with websites)</li>
+                    <li><strong>Web navigation:</strong> Lets the AI navigate to new URLs or go back/forward in your browser history</li>
+                    <li><strong>Scripting:</strong> Allows the AI to check your browser history state before navigating</li>
+                    <li><strong>Debugger:</strong> For stubborn websites that block automated inputs, this creates real keyboard/mouse events. A banner appears at the top of your browser when this is active</li>
+                </ul>
+
+                <p class="text-sm text-muted-foreground"><strong>Important:</strong> All these permissions are necessary for the AI to automate tasks on websites. Without them, Sitegeist can't do its job. Your data always stays on your computer unless you explicitly send it in a chat message.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-muted-foreground text-sm mt-12">
+            <p>© 2025 Sitegeist - Made by <a href="https://mariozechner.at" class="text-foreground underline">Mario Zechner</a></p>
+        </footer>
+    </div>
+
+    <!-- OrbAnimation Component -->
+    <script type="module" src="OrbAnimation.ts"></script>
+
+    <!-- Rotating tagline word -->
+    <script>
+        const taglineWords = ["automate", "write", "transform", "research", "scrape", "create"];
+        let currentWordIndex = 0;
+        const wordElement = document.getElementById('tagline-word');
+
+        setInterval(() => {
+            currentWordIndex = (currentWordIndex + 1) % taglineWords.length;
+            wordElement.textContent = taglineWords[currentWordIndex];
+        }, 2000);
+    </script>
+</body>
+</html>

@@ -9,6 +9,7 @@ services:
       caddy.reverse_proxy: '{{upstreams 80}}'
     volumes:
       - ../dist/frontend:/srv:ro
+      - ../uploads:/uploads:ro
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
     networks:
       - caddy-network

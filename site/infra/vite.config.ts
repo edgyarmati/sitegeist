@@ -53,6 +53,7 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, '../src/frontend/index.html'),
         admin: path.resolve(__dirname, '../src/frontend/admin/index.html'),
+        install: path.resolve(__dirname, '../src/frontend/install.html'),
       },
     },
   },
