@@ -48,12 +48,12 @@ export class SessionCostDialog extends DialogBase {
 		}
 
 		const dialog = new SessionCostDialog();
-		SessionCostDialog.currentDialog = dialog;
 		dialog.messages = messages;
 		dialog.processCostData();
-		document.body.appendChild(dialog);
 		dialog.open();
 		dialog.requestUpdate();
+		// Set static reference AFTER dialog is opened to avoid race condition with disconnectedCallback
+		SessionCostDialog.currentDialog = dialog;
 	}
 
 	private processCostData() {
