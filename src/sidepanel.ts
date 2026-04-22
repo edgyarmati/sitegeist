@@ -454,6 +454,13 @@ const createAgent = async (initialState?: Partial<AgentState>, shouldSave = true
 			}
 
 			renderApp();
+
+			if (event.type === "agent_end") {
+				agent.waitForIdle().then(() => {
+					chatPanel.agentInterface?.requestUpdate();
+					renderApp();
+				});
+			}
 		});
 	}
 
