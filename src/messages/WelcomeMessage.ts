@@ -52,15 +52,6 @@ export class WelcomeMessageElement extends LitElement {
 		}
 	}
 
-	private async selectTutorial(prompt: string) {
-		// Remove this welcome message
-		const messages = this.agent.state.messages.filter((m) => m !== this.message);
-		this.agent.replaceMessages(messages);
-
-		// Send tutorial prompt
-		await this.agentInterface.sendMessage(prompt);
-	}
-
 	override render(): TemplateResult {
 		return html`
 			<div class="welcome-orb-container my-8 flex flex-col items-center justify-center">
@@ -82,20 +73,6 @@ export class WelcomeMessageElement extends LitElement {
 					<orb-animation></orb-animation>
 				</div>
 
-				<!-- Tutorial pills -->
-				<div class="flex flex-wrap gap-3 justify-center max-w-lg px-6 mt-4">
-					${this.tutorials.map(
-						(tutorial, index) => html`
-							<button
-								class="tutorial-pill px-6 py-3 text-sm font-medium text-foreground rounded-full cursor-pointer"
-								@click=${() => this.selectTutorial(tutorial.prompt)}
-								style="animation-delay: ${index * 0.1}s;"
-							>
-								${tutorial.label}
-							</button>
-						`,
-					)}
-				</div>
 			</div>
 		`;
 	}

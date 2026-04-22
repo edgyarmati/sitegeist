@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="media/hero.png" alt="Ghost in the Web" width="400">
-</p>
+# Ghost in the Web
 
 An AI assistant that lives in your browser sidebar. Built for collaboration, not autonomy theater. You guide, it executes.
 
@@ -8,9 +6,7 @@ Ghost in the Web can automate repetitive web tasks, extract data from any websit
 
 Bring your own API key or log in with an existing subscription (Anthropic Claude, OpenAI/ChatGPT, GitHub Copilot, Google Gemini). Your data stays on your machine. Nothing is collected or tracked.
 
-## Download & Install
-
-Visit [sitegeist.ai](https://sitegeist.ai) for download links and step-by-step installation instructions.
+## Requirements
 
 Requires Chrome 141+ or Edge equivalent.
 
