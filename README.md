@@ -77,7 +77,7 @@ Bumps the version in `static/manifest.chrome.json`, commits, tags, and pushes. G
 
 ## Credits
 
-Forked from [badlogic/sitegeist](https://github.com/badlogic/sitegeist) by Mario Zechner. All the hard architectural work — the agent core, web UI, skills system, REPL tool, everything that makes this thing tick — is his. This fork exists to scratch a personal itch and carry a different name. If you're looking for the actively-maintained original, go there.
+Forked from [badlogic/sitegeist](https://github.com/badlogic/sitegeist) by Mario Zechner. All the hard architectural work - the agent core, web UI, skills system, REPL tool, everything that makes this thing tick - is his. This fork exists to scratch a personal itch. Also, at the time when this was created, he stated that he won't be actively maintaining it, while this will receive updates (mostly stuff I personally need).
 
 ## License
 
