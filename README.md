@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="media/hero.png" alt="Sitegeist" width="400">
+  <img src="media/hero.png" alt="Ghost in the Web" width="400">
 </p>
 
 An AI assistant that lives in your browser sidebar. Built for collaboration, not autonomy theater. You guide, it executes.
 
-Sitegeist can automate repetitive web tasks, extract data from any website, navigate across pages, fill out forms, compare products, compile research, and transform what it finds into documents, spreadsheets, or whatever you need. It works on any website through a Chrome/Edge side panel, using the AI provider of your choice.
+Ghost in the Web can automate repetitive web tasks, extract data from any website, navigate across pages, fill out forms, compare products, compile research, and transform what it finds into documents, spreadsheets, or whatever you need. It works on any website through a Chrome/Edge side panel, using the AI provider of your choice.
 
 Bring your own API key or log in with an existing subscription (Anthropic Claude, OpenAI/ChatGPT, GitHub Copilot, Google Gemini). Your data stays on your machine. Nothing is collected or tracked.
 
@@ -55,7 +55,7 @@ npm run dev
 2. Enable Developer mode
 3. Click Load unpacked
 4. Select `sitegeist/dist-chrome/`
-5. Click "Details" on the Sitegeist extension and enable:
+5. Click "Details" on the Ghost in the Web extension and enable:
    - **Allow user scripts**
    - **Allow access to file URLs**
 
@@ -63,7 +63,7 @@ The extension hot-reloads when the dev watcher rebuilds.
 
 ### First run
 
-On first launch, Sitegeist prompts you to connect at least one AI provider. You can log in with a subscription or enter an API key.
+On first launch, Ghost in the Web prompts you to connect at least one AI provider. You can log in with a subscription or enter an API key.
 
 Some subscription logins require the CORS proxy (configurable in Settings > Proxy). The default proxy is `https://proxy.mariozechner.at/proxy`.
 

@@ -84,10 +84,10 @@ Shared prompts and runtime provider descriptions:
 - `ATTACHMENTS_RUNTIME_DESCRIPTION` - User attachment access: `listAttachments()`, `readTextAttachment()`, `readBinaryAttachment()`
 - `EXTRACT_DOCUMENT_DESCRIPTION` - Extract text from PDF/DOCX/XLSX/PPTX
 
-### Sitegeist Prompts
+### Ghost in the Web Prompts
 **File**: `/Users/badlogic/workspaces/sitegeist/src/prompts/prompts.ts`
 
-Sitegeist-specific prompts:
+Ghost in the Web-specific prompts:
 
 **System Prompt**:
 - `SYSTEM_PROMPT` - Main agent identity, tone, workflows
@@ -311,7 +311,7 @@ For tools that manipulate content (artifacts, skills), use consistent action nam
 
 1. **Choose the right location**:
    - Shared/reusable tools → `/Users/badlogic/workspaces/pi-mono/packages/web-ui/src/prompts/prompts.ts`
-   - Sitegeist-specific tools → `/Users/badlogic/workspaces/sitegeist/src/prompts/prompts.ts`
+   - Ghost in the Web-specific tools → `/Users/badlogic/workspaces/sitegeist/src/prompts/prompts.ts`
 
 2. **Follow the tool description pattern** (see above)
 
@@ -372,7 +372,7 @@ After updating prompts:
 
 **Prompt Definitions**:
 - `/Users/badlogic/workspaces/pi-mono/packages/web-ui/src/prompts/prompts.ts` - Shared prompts and providers
-- `/Users/badlogic/workspaces/sitegeist/src/prompts/prompts.ts` - Sitegeist-specific prompts
+- `/Users/badlogic/workspaces/sitegeist/src/prompts/prompts.ts` - Ghost in the Web-specific prompts
 
 **Provider Implementations**:
 - `/Users/badlogic/workspaces/pi-mono/packages/web-ui/src/components/sandbox/ArtifactsRuntimeProvider.ts` - Artifacts provider

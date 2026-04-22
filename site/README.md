@@ -1,4 +1,4 @@
-# Sitegeist Landing Page
+# Ghost in the Web Landing Page
 
 Email signup landing page with backend storage and Three.js orb animation.
 

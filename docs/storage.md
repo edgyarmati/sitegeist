@@ -2,7 +2,7 @@
 
 ## Overview
 
-Sitegeist uses a unified IndexedDB storage system with multiple object stores for different data types. The base storage infrastructure is defined in `@mariozechner/pi-web-ui` and extended in Sitegeist with additional stores for skills.
+Ghost in the Web uses a unified IndexedDB storage system with multiple object stores for different data types. The base storage infrastructure is defined in `@mariozechner/pi-web-ui` and extended in Ghost in the Web with additional stores for skills.
 
 ## Current Implementation
 
@@ -14,7 +14,7 @@ Single IndexedDB database `sitegeist-storage` with multiple object stores:
 - `settings` - Application settings (key-value pairs)
 - `provider-keys` - API keys for LLM providers
 
-**Extension stores** (Sitegeist-specific):
+**Extension stores** (Ghost in the Web-specific):
 - `skills` - Skill definitions with library code
 
 **Benefits**:
@@ -223,7 +223,7 @@ export class SessionsStore extends Store {
 - `lastModified` index enables sorted queries via IndexedDB cursor
 - Much faster than fetching all keys and sorting in JavaScript
 
-## Extension Stores (Sitegeist)
+## Extension Stores (Ghost in the Web)
 
 ### SkillsStore
 
@@ -297,7 +297,7 @@ export function setAppStorage(storage: AppStorage): void {
 
 Location: `src/storage/app-storage.ts`
 
-Extends base storage with Sitegeist-specific stores.
+Extends base storage with Ghost in the Web-specific stores.
 
 **Initialization order**:
 1. Create store instances (no backend)
