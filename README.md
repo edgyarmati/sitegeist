@@ -1,27 +1,35 @@
 # Ghost in the Web
 
-An AI assistant that lives in your browser sidebar. Built for collaboration, not autonomy theater. You guide, it executes.
+A Chrome/Edge side-panel AI assistant that does things on the web with you, not instead of you. You drive, it executes — scraping pages, filling forms, chaining across tabs, turning whatever it finds into markdown, sheets, PDFs, or HTML.
 
-Ghost in the Web can automate repetitive web tasks, extract data from any website, navigate across pages, fill out forms, compare products, compile research, and transform what it finds into documents, spreadsheets, or whatever you need. It works on any website through a Chrome/Edge side panel, using the AI provider of your choice.
+Bring your own key or log in with a subscription (Anthropic, OpenAI, GitHub Copilot, Google). Everything — settings, API keys, chat history — stays on your machine. Zero telemetry, zero tracking.
 
-Bring your own API key or log in with an existing subscription (Anthropic Claude, OpenAI/ChatGPT, GitHub Copilot, Google Gemini). Your data stays on your machine. Nothing is collected or tracked.
+## Install
 
-## Requirements
+1. Download the latest `ghost-in-the-web.zip` from the [Releases page](https://github.com/edgyarmati/sitegeist/releases/latest) and unzip it.
+2. Open `chrome://extensions/` (or `edge://extensions/`) and enable **Developer mode**.
+3. Click **Load unpacked** and select the unzipped folder.
+4. Click **Details** on the extension and enable:
+   - **Allow user scripts**
+   - **Allow access to file URLs**
+5. Pin the extension and click its icon to open the side panel.
 
-Requires Chrome 141+ or Edge equivalent.
+Requires Chrome 141+ (or Edge equivalent).
+
+On first launch, connect at least one AI provider. Some subscription logins need the CORS proxy (Settings → Proxy, on by default). The default proxy is `https://proxy.mariozechner.at/proxy`, which belongs to the author of the upstream repo — swap it for your own if that matters to you.
 
 ## Development
 
-Clone this repo plus its sibling dependencies into the same parent directory:
+Clone this repo alongside its sibling dependencies:
 
 ```
 parent/
-  mini-lit/          # https://github.com/badlogic/mini-lit
-  pi-mono/           # https://github.com/badlogic/pi-mono
-  sitegeist/         # this repo
+  mini-lit/     # https://github.com/badlogic/mini-lit
+  pi-mono/      # https://github.com/badlogic/pi-mono
+  sitegeist/    # this repo
 ```
 
-Install dependencies in each repo:
+Install dependencies in each:
 
 ```bash
 (cd ../mini-lit && npm install)
@@ -29,39 +37,19 @@ Install dependencies in each repo:
 npm install
 ```
 
-`npm install` sets up the Husky pre-commit hook automatically.
-
-Start all dev watchers (mini-lit, pi-mono, sitegeist extension, marketing site):
+Start the watchers (mini-lit, pi-mono, and the extension):
 
 ```bash
 ./dev.sh
 ```
 
-Changes in `../mini-lit` or `../pi-mono` are rebuilt automatically and picked up by the sitegeist watcher.
-
-To run only the extension watcher without dependencies or the marketing site:
+Or just the extension:
 
 ```bash
 npm run dev
 ```
 
-### Loading the extension
-
-1. Open `chrome://extensions/` or `edge://extensions/`
-2. Enable Developer mode
-3. Click Load unpacked
-4. Select `sitegeist/dist-chrome/`
-5. Click "Details" on the Ghost in the Web extension and enable:
-   - **Allow user scripts**
-   - **Allow access to file URLs**
-
-The extension hot-reloads when the dev watcher rebuilds.
-
-### First run
-
-On first launch, Ghost in the Web prompts you to connect at least one AI provider. You can log in with a subscription or enter an API key.
-
-Some subscription logins require the CORS proxy (configurable in Settings > Proxy). The default proxy is `https://proxy.mariozechner.at/proxy` (belonging to the author of the upstream repo).
+Load `dist-chrome/` as an unpacked extension (same steps as Install above). The extension hot-reloads when the dev watcher rebuilds.
 
 ## Checks
 
@@ -69,35 +57,27 @@ Some subscription logins require the CORS proxy (configurable in Settings > Prox
 ./check.sh
 ```
 
-Runs formatting, linting, and type checking for the extension and the `site/` subproject.
+Runs formatting, linting, and type checking. The Husky pre-commit hook runs the same checks before each commit.
 
-The Husky pre-commit hook runs the same checks before each commit.
-
-## Building
+## Build
 
 ```bash
 npm run build
 ```
 
-The unpacked extension is written to `dist-chrome/`.
+Outputs the unpacked extension to `dist-chrome/`.
 
-## Updating the website
-
-```bash
-cd site && ./run.sh deploy
-```
-
-Builds the static site and uploads it to `sitegeist.ai`. Requires SSH access to `slayer.marioslab.io`.
-
-## Releasing
+## Release
 
 ```bash
-./release.sh patch   # 1.0.0 -> 1.0.1
-./release.sh minor   # 1.0.0 -> 1.1.0
-./release.sh major   # 1.0.0 -> 2.0.0
+./release.sh patch   # or minor / major
 ```
 
-Bumps the version in `static/manifest.chrome.json`, commits, tags, and pushes. GitHub Actions builds the extension and creates a release at [github.com/badlogic/sitegeist/releases](https://github.com/badlogic/sitegeist/releases).
+Bumps the version in `static/manifest.chrome.json`, commits, tags, and pushes. GitHub Actions builds and publishes the release.
+
+## Credits
+
+Forked from [badlogic/sitegeist](https://github.com/badlogic/sitegeist) by Mario Zechner. All the hard architectural work — the agent core, web UI, skills system, REPL tool, everything that makes this thing tick — is his. This fork exists to scratch a personal itch and carry a different name. If you're looking for the actively-maintained original, go there.
 
 ## License
 
