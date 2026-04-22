@@ -20,7 +20,7 @@
 		"@mariozechner/pi-agent-core": "file:../pi-mono/packages/agent",
 		"@mariozechner/pi-ai": "file:../pi-mono/packages/ai",
 		"@mariozechner/pi-web-ui": "file:../pi-mono/packages/web-ui",
-		"@sinclair/typebox": "^0.34.41",
+		"@sinclair/typebox": "0.34.49",
 		"chart.js": "^4.5.1",
 		"docx-preview": "^0.3.7",
 		"fuse.js": "^7.1.0",
@@ -44,6 +44,7 @@
 		"concurrently": "^9.2.1",
 		"esbuild": "^0.25.10",
 		"husky": "^9.1.7",
+		"typescript": "^5.9.3",
 		"ws": "^8.18.0"
 	}
 }
