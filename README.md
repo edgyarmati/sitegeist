@@ -61,7 +61,7 @@ The extension hot-reloads when the dev watcher rebuilds.
 
 On first launch, Ghost in the Web prompts you to connect at least one AI provider. You can log in with a subscription or enter an API key.
 
-Some subscription logins require the CORS proxy (configurable in Settings > Proxy). The default proxy is `https://proxy.mariozechner.at/proxy`.
+Some subscription logins require the CORS proxy (configurable in Settings > Proxy). The default proxy is `https://proxy.mariozechner.at/proxy` (belonging to the author of the upstream repo).
 
 ## Checks
 
