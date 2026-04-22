@@ -6,7 +6,7 @@ Bring your own key or log in with a subscription (Anthropic, OpenAI, GitHub Copi
 
 ## Install
 
-1. Download the latest `ghost-in-the-web.zip` from the [Releases page](https://github.com/edgyarmati/sitegeist/releases/latest) and unzip it.
+1. Download the latest `ghost-in-the-web.zip` from the [Releases page](https://github.com/edgyarmati/ghostintheweb/releases/latest) and unzip it.
 2. Open `chrome://extensions/` (or `edge://extensions/`) and enable **Developer mode**.
 3. Click **Load unpacked** and select the unzipped folder.
 4. Click **Details** on the extension and enable:
