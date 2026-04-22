@@ -508,7 +508,7 @@ const createAgent = async (initialState?: Partial<AgentState>, shouldSave = true
 			// Only add if URL changed
 			if (!lastUrl || lastUrl !== tab.url) {
 				const navMessage = await createNavigationMessage(tab.url, tab.title || "Untitled", tab.favIconUrl, tab.id);
-				agent.appendMessage(navMessage);
+				agent.state.messages.push(navMessage);
 			}
 		},
 		onCostClick: () => {
@@ -997,7 +997,7 @@ async function initApp() {
 				await createAgent();
 				if (agent) {
 					const welcomeMessage = createWelcomeMessage(tutorials);
-					agent.appendMessage(welcomeMessage);
+					agent.state.messages.push(welcomeMessage);
 				}
 				renderApp();
 				return;
@@ -1030,7 +1030,7 @@ async function initApp() {
 	// Add welcome message for new sessions
 	if (agent) {
 		const welcomeMessage = createWelcomeMessage(tutorials);
-		agent.appendMessage(welcomeMessage);
+		agent.state.messages.push(welcomeMessage);
 	}
 
 	renderApp();
