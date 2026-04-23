@@ -2,6 +2,31 @@
 
 ## [Unreleased]
 
+### Breaking Changes
+
+- None.
+
+### Added
+
+- None.
+
+### Changed
+
+- Rebranded project documentation and website content from Sitegeist to Ghost in the Web.
+- Updated repository URLs and release/readme documentation to match the renamed project.
+- Updated README credits section.
+- Removed hero image, `sitegeist.ai` link, and fresh-chat tutorial pills from project docs/site content.
+
+### Fixed
+
+- Pinned `@sinclair/typebox` to `0.34.49` and added `typescript` as a dev dependency to stabilize type/tooling compatibility.
+- Restored compatibility with upstream `pi-agent-core` API changes by replacing removed `agent.setModel(...)` and `agent.appendMessage(...)` usage.
+- Forced agent interface re-render after `agent_end` idle transitions to fix stale UI state.
+
+### Removed
+
+- None.
+
 ## [1.0.0] - 2026-03-15
 
 ### Added
